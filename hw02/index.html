@@ -331,102 +331,96 @@
         console.log("start build_plane_selection()...");
 
         /** Your code goes here */
-        var svg1 = d3
-          .select("#planes")
-          .append("svg")
-          .attr("viewBox", "0 0 1500 100")
-          .attr("style", "height:100%;width:100%")
-          .attr("id", "svgplanes")
-          .attr("xmlns", "http://www.w3.org/2000/svg")
-          .attr("xmlns:svg", "http://www.w3.org/2000/svg")
-          .attr("xmlns:xlink", "http://www.w3.org/1999/xlink");
-
-        var svgRectSize = Math.floor((1500 - 8 * 17) / 17);
-        var currentSelectPlane = null;
-
-        svg1
-          .selectAll("rect")
-          .data(unicode)
-          .enter()
-          .append("rect")
-          .attr("class", "unicode_planes")
-          .classed("selected", function (d, i) {
-            if (i == plane_select) {
-              currentSelectPlane = d3.select(this);
-              return true;
-            }
-            return false;
-          })
-          .attr("id", function (d, i) {
-            return "plane" + i;
-          })
-          .attr("x", function (d, i) {
-            return 8 + i * svgRectSize + i * 8;
-          })
-          .attr("y", 8)
-          .attr("width", svgRectSize)
-          .attr("height", svgRectSize)
-          .attr("fill", function (d, i) {
-            return (
-              "rgb(" +
-              (0).toString() +
-              ", " +
-              ((i % 17) * 16).toString() +
-              ", " +
-              ((i % 17) * 16).toString() +
-              ")"
-            );
-          })
-          .on("mousemove", function () {
-            //console.log();
-            //Get this bar's x/y values, then augment for the tooltip
-            console.log(d3.mouse(this));
-            var xPosition = parseInt(d3.mouse(this)[0]);
-            var yPosition = parseInt(d3.mouse(this)[1]);
-            d3.select("#tooltip_planes").remove();
-            //Create the tooltip label
-            svg1
-              .append("text")
-              .attr("id", "tooltip_planes")
-              .attr("x", xPosition + 24)
-              .attr("y", yPosition)
-              .attr("text-anchor", "middle")
-              .attr("font-family", "sans-serif")
-              .attr("font-size", "11px")
-              .attr("font-weight", "bold")
-              .attr("fill", "white")
-              .text(xPosition + ", " + yPosition);
-          })
-          .on("mouseout", function () {
-            d3.select("#tooltip_planes").remove();
-          })
-          .on("click", function (o_pe, d) {
-            plane_select = unicode.indexOf(o_pe);
-            currentSelectPlane.classed("selected", false);
-            currentSelectPlane = d3
-              .select("#plane" + plane_select)
-              .classed("selected", true);
-            //console.log(d + ', ' + plane_select + ', ' + o_pe);
-            d3.select("#plane_now").html(
-              d + ", plane_select = " + plane_select
-            );
-            build_plane();
-          });
-
-        svg1
-          .selectAll("text")
-          .data(unicode)
-          .enter()
-          .append("text")
-          .text(function (d) {
-            return d;
-          })
-          .attr("x", function (d, i) {
-            return 16 + i * svgRectSize + i * 8;
-          })
-          .attr("y", 32)
-          .attr("fill", "#ff0")
-          .attr("font-size", "12pt");
+        var svg1 = d3.select('#planes')
+                .append('svg')
+                .attr('viewBox', '0 0 1500 100')
+                .attr('style', 'height:100%;width:100%')
+                .attr('id', 'svgplanes')
+                .attr("xmlns", 'http://www.w3.org/2000/svg')
+                .attr("xmlns:svg", 'http://www.w3.org/2000/svg')
+                .attr("xmlns:xlink", 'http://www.w3.org/1999/xlink')
+            ;
+            var svgRectSize = Math.floor((1500- 8 * 17) / 17);
+            var currentSelectPlane = null;
+            svg1.selectAll("rect")
+                .data(unicode)
+                .enter()
+                .append("rect")
+                .attr("class", 'unicode_planes')
+                .classed("selected", function(d, i){
+                    if(i == plane_select){
+                        currentSelectPlane = d3.select(this);
+                        return true;
+                    }
+                    return false;
+                })
+                .attr("id", function(d,i){
+                    return 'plane' + i;
+                })
+                .attr("x", function(d, i) {
+                    return  8 + i * svgRectSize + (i) * 8;
+                })
+                .attr("y", 8)
+                .attr("width", svgRectSize)
+                .attr("height", svgRectSize)
+                .attr("fill", function(d, i) {
+                    return 'rgb('
+                    + (0).toString()
+                    + ', '
+                    + (i % 17 * 16).toString()
+                    + ', '  
+                    + (i % 17 * 16).toString()
+                    + ')';
+                    }
+                )
+                .on("mousemove", function() {
+                    //console.log();
+                    //Get this bar's x/y values, then augment for the tooltip
+                    console.log(d3.mouse(this));
+                    var xPosition = parseInt(d3.mouse(this)[0]);
+                    var yPosition = parseInt(d3.mouse(this)[1]);
+                    d3.select("#tooltip_planes").remove();
+                    //Create the tooltip label
+                    svg1.append("text")
+                        .attr("id", "tooltip_planes")
+                        .attr("x", xPosition + 24)
+                        .attr("y", yPosition)
+                        .attr("text-anchor", "middle")
+                        .attr("font-family", "sans-serif")
+                        .attr("font-size", "11px")
+                        .attr("font-weight", "bold")
+                        .attr("fill", "white")
+                        .text(xPosition + ', ' + yPosition);
+                })
+                .on("mouseout", function(){
+                    d3.select("#tooltip_planes").remove();
+                })
+                .on("click", function(o_pe, d){
+                    plane_select = unicode.indexOf(o_pe);
+                    currentSelectPlane.classed("selected", false);
+                    currentSelectPlane = d3.select('#plane' + plane_select)
+                        .classed("selected", true)
+                    ;
+                    //console.log(d + ', ' + plane_select + ', ' + o_pe);
+                    d3.select('#plane_now')
+                        .html(d + ', plane_select = ' + plane_select)
+                    ;
+                    d3.select('#svg').remove();
+                    build_plane();
+                })
+            ;
+            svg1.selectAll("text")
+                    .data(unicode)
+                    .enter()
+                    .append("text")
+                    .text(function(d){ return d; })
+                    .attr("x", function(d, i) {
+                        return  16 + i * svgRectSize + (i) * 8;
+                    })
+                    .attr("y", 32)
+                    .attr("fill", "#ff0")
+                    .attr("font-size", "12pt")
+            ;
 
         console.log("end build_plane_selection()...");
       }
