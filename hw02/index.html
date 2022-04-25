@@ -246,10 +246,22 @@
               "viewBox",
               [0, -glyph.yMin, font.unitsPerEm, font.unitsPerEm].join(" ")
             );
+
           svg3
             .append("path")
             .attr("d", tmpPath.toPathData())
             .attr("class", "font-svg");
+
+          for (let i = 0; i < svgPathObj[1].length; i += 1) {
+            svg3
+              .append("cicle")
+              .attr("cx", svgPathObj[1][i][0])
+              .attr("cy", svgPathObj[1][i][1])
+              .attr("r", 35)
+              .attr("fill", "red")
+              .attr("class", "point-svg");
+          }
+
           d3.select("#svg_text").html(svg3.node().outerHTML);
           svgHTML = svg3.node().outerHTML;
         }
